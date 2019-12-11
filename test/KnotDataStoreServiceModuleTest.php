@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace KnotModule\KnotDataStoreService\Test;
 
 use PHPUnit\Framework\TestCase;
+
 use KnotLib\Kernel\Module\Components;
-use KnotModule\KnotDataStoreService\KnotDataStoreServiceModule;
-use KnotModule\KnotDi\KnotDiModule;
 use KnotLib\DataStore\Service\DI;
 use KnotLib\DataStore\Service\TransactionService;
 use KnotLib\DataStore\Service\RepositoryService;
+
+use KnotPhp\Module\KnotDataStoreService\KnotDataStoreServiceModule;
+use KnotPhp\Module\KnotDi\KnotDiModule;
 
 final class KnotDataStoreServiceModuleTest extends TestCase
 {
