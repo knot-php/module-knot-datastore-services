@@ -15,11 +15,11 @@ use KnotLib\Kernel\Kernel\ApplicationInterface;
 use KnotLib\Kernel\Module\ComponentModule;
 use KnotLib\Kernel\EventStream\Events;
 use KnotLib\Kernel\EventStream\Channels as EventChannels;
-use KnotLib\DataStore\Service\DataStoreComponentTrait;
-use KnotLib\DataStore\Service\TransactionService;
-use KnotLib\DataStore\Service\DI;
-use KnotLib\DataStore\Service\RepositoryService;
-use KnotLib\DataStore\Service\DataStoreStringTrait;
+use KnotLib\DataStoreService\DataStoreComponentTrait;
+use KnotLib\DataStoreService\TransactionService;
+use KnotLib\DataStoreService\DI;
+use KnotLib\DataStoreService\RepositoryService;
+use KnotLib\DataStoreService\DataStoreStringTrait;
 
 final class KnotDataStoreServiceModule extends ComponentModule
 {

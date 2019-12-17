@@ -6,9 +6,9 @@ namespace KnotModule\KnotDataStoreService\Test;
 use PHPUnit\Framework\TestCase;
 
 use KnotLib\Kernel\Module\Components;
-use KnotLib\DataStore\Service\DI;
-use KnotLib\DataStore\Service\TransactionService;
-use KnotLib\DataStore\Service\RepositoryService;
+use KnotLib\DataStoreService\DI;
+use KnotLib\DataStoreService\TransactionService;
+use KnotLib\DataStoreService\RepositoryService;
 
 use KnotPhp\Module\KnotDataStoreService\KnotDataStoreServiceModule;
 use KnotPhp\Module\KnotDi\KnotDiModule;
