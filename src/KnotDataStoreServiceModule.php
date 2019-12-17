@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace KnotPhp\Module\KnotDataStoreService;
 
+use KnotLib\DataStoreService\ConnectionService;
 use Throwable;
 
 use KnotLib\Di\Container;
@@ -17,7 +18,6 @@ use KnotLib\Kernel\EventStream\Events;
 use KnotLib\Kernel\EventStream\Channels as EventChannels;
 use KnotLib\DataStoreService\DataStoreComponentTrait;
 use KnotLib\DataStoreService\TransactionService;
-use KnotLib\DataStoreService\DI;
 use KnotLib\DataStoreService\RepositoryService;
 use KnotLib\DataStoreService\DataStoreStringTrait;
 
@@ -35,7 +35,6 @@ final class KnotDataStoreServiceModule extends ComponentModule
     {
         return [
             Components::DI,
-            Components::LOGGER,
             Components::EVENTSTREAM,
         ];
     }
@@ -67,7 +66,7 @@ final class KnotDataStoreServiceModule extends ComponentModule
             //====================================
 
             // components.database factory
-            $c[DI::COMPONENT_DATABASE] = function(Container $c) {
+            $c['component://database'] = function(Container $c) {
                 $db_dsn  = $this->getDatabaseDSN($c);
                 $db_user = getenv('DB_USER') ? getenv('DB_USER') : '';
                 $db_pass = getenv('DB_PASS') ? getenv('DB_PASS') : '';
@@ -75,13 +74,13 @@ final class KnotDataStoreServiceModule extends ComponentModule
             };
 
             // components.storage.default factory
-            $c[DI::COMPONENT_STORAGE_DEAULT] = function(Container $c){
-                $conn = $this->getDefaultConnection($c);
+            $c['component://storage:default'] = function(Container $c){
+                $conn = $this->getConnection($c);
                 return new DatabaseStorage($conn);
             };
 
             // components.connection.default factory
-            $c[DI::COMPONENT_CONNECTION_DEAULT] = function(Container $c){
+            $c['component://connection:default'] = function(Container $c){
                 $db = $this->getDatabase($c);
                 return $db->connection();
             };
@@ -94,14 +93,14 @@ final class KnotDataStoreServiceModule extends ComponentModule
             // Strings
             //====================================
 
-            // strings.db_driver factory
-            $c[DI::STRING_DB_DRIVER] = function(Container $c) {
-                $conn = $this->getDefaultConnection($c);
+            // string.database.driver factory
+            $c['string://database/driver'] = function(Container $c) {
+                $conn = $this->getConnection($c);
                 return $conn->getDriverName();
             };
 
-            // strings.db_dsn factory
-            $c[DI::STRING_DB_DSN] = function() {
+            // string.database.dsn factory
+            $c['string://database/dsn'] = function() {
                 $db_dsn  = getenv('DB_DSN');
                 return $db_dsn ? $db_dsn : '';
             };
@@ -110,15 +109,21 @@ final class KnotDataStoreServiceModule extends ComponentModule
             // Services
             //====================================
 
-            // services.repository factory
-            $c[DI::SERVICE_REPOSITORY] = function(){
+            // service.repository factory
+            $c['service://repository'] = function(){
                 return new RepositoryService();
             };
 
-            // services.transaction.default factory
-            $c[DI::SERVICE_TRANSACTION_DEFAULT] = function(Container $c){
-                $conn = $this->getDefaultConnection($c);
+            // service.transaction.default factory
+            $c['service://transaction:default'] = function(Container $c){
+                $conn = $this->getConnection($c);
                 return new TransactionService($conn);
+            };
+
+            // service.connection.default factory
+            $c['service://connection:default'] = function(Container $c){
+                $conn = $this->getConnection($c);
+                return new ConnectionService($conn);
             };
 
             // fire event
