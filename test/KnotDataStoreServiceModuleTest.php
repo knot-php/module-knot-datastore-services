@@ -46,24 +46,22 @@ final class KnotDataStoreServiceModuleTest extends TestCase
     {
         $app = new TestApplication(new TestFileSystem());
 
-        $app->installModules([
-            KnotDiModule::class,
-            KnotDataStoreServiceModule::class,
-        ]);
+        $app->installModule(KnotDiModule::class);
+        $app->installModule(KnotDataStoreServiceModule::class);
 
         $di = $app->di();
 
         $this->assertNotNull($di);
 
         $this->assertInstanceOf(Database::class, $di[DI::URI_COMPONENT_DATABASE]);
-        $this->assertInstanceOf(DatabaseStorage::class, $di[DI::uri(DI::URI_COMPONENT_STORAGE,'default')]);
-        $this->assertInstanceOf(DatabaseConnection::class, $di[DI::uri(DI::URI_COMPONENT_CONNECTION,'default')]);
+        $this->assertInstanceOf(DatabaseStorage::class, $di['component://storage:default']);
+        $this->assertInstanceOf(DatabaseConnection::class, $di['component://connection:default']);
 
         $this->assertEquals('sqlite', $di[DI::URI_STRING_DB_DRIVER]);
         $this->assertEquals('sqlite::memory:', $di[DI::URI_STRING_DB_DSN]);
 
-        $this->assertInstanceOf(TransactionService::class, $di[DI::uri(DI::URI_SERVICE_TRANSACTION,'default')]);
-        $this->assertInstanceOf(ConnectionService::class, $di[DI::uri(DI::URI_SERVICE_CONNECTION,'default')]);
-        $this->assertInstanceOf(RepositoryService::class, $di[DI::URI_SERVICE_REPOSITORY]);
+        $this->assertInstanceOf(TransactionService::class, $di['service://transaction:default']);
+        $this->assertInstanceOf(ConnectionService::class, $di['service://connection:default']);
+        $this->assertInstanceOf(RepositoryService::class, $di['service://repository']);
     }
 }
