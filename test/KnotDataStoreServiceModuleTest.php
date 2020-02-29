@@ -9,7 +9,7 @@ use KnotLib\DataStore\Storage\Database\DatabaseStorage;
 use KnotLib\DataStoreService\ConnectionService;
 use PHPUnit\Framework\TestCase;
 
-use KnotLib\Kernel\Module\Components;
+use KnotLib\Kernel\Module\ComponentTypes;
 use KnotLib\DataStoreService\DI;
 use KnotLib\DataStoreService\TransactionService;
 use KnotLib\DataStoreService\RepositoryService;
@@ -26,17 +26,17 @@ final class KnotDataStoreServiceModuleTest extends TestCase
         putenv('DB_DSN=sqlite::memory:');
     }
 
-    public function testRequiredComponents()
+    public function testRequiredComponentTypes()
     {
         $this->assertEquals([
-            Components::DI,
-            Components::EVENTSTREAM,
+            ComponentTypes::DI,
+            ComponentTypes::EVENTSTREAM,
         ],
-        KnotDataStoreServiceModule::requiredComponents());
+        KnotDataStoreServiceModule::requiredComponentTypes());
     }
     public function testDeclareComponentType()
     {
-        $this->assertEquals(Components::MODULE, KnotDataStoreServiceModule::declareComponentType());
+        $this->assertEquals(ComponentTypes::SERVICE, KnotDataStoreServiceModule::declareComponentType());
     }
 
     /**

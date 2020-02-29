@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace KnotPhp\Module\KnotDataStoreService;
 
-use KnotLib\DataStoreService\ConnectionService;
-use KnotLib\DataStoreService\DI;
 use Throwable;
 
 use KnotLib\Di\Container;
 use KnotLib\DataStore\Storage\Database\Database;
 use KnotLib\DataStore\Storage\Database\DatabaseStorage;
-
-use KnotLib\Kernel\Module\Components;
+use KnotLib\DataStoreService\ConnectionService;
+use KnotLib\DataStoreService\DI;
+use KnotLib\Kernel\Module\ModuleInterface;
+use KnotLib\Kernel\Module\ComponentTypes;
 use KnotLib\Kernel\Exception\ModuleInstallationException;
 use KnotLib\Kernel\Kernel\ApplicationInterface;
-use KnotLib\Kernel\Module\ComponentModule;
 use KnotLib\Kernel\EventStream\Events;
 use KnotLib\Kernel\EventStream\Channels as EventChannels;
 use KnotLib\DataStoreService\Util\DataStoreComponentTrait;
@@ -22,21 +21,31 @@ use KnotLib\DataStoreService\Util\DataStoreStringTrait;
 use KnotLib\DataStoreService\TransactionService;
 use KnotLib\DataStoreService\RepositoryService;
 
-final class KnotDataStoreServiceModule extends ComponentModule
+final class KnotDataStoreServiceModule implements ModuleInterface
 {
     use DataStoreComponentTrait;
     use DataStoreStringTrait;
+
+    /**
+     * Declare dependency on another modules
+     *
+     * @return array
+     */
+    public static function requiredModules() : array
+    {
+        return [];
+    }
 
     /**
      * Declare dependent on components
      *
      * @return array
      */
-    public static function requiredComponents() : array
+    public static function requiredComponentTypes() : array
     {
         return [
-            Components::DI,
-            Components::EVENTSTREAM,
+            ComponentTypes::DI,
+            ComponentTypes::EVENTSTREAM,
         ];
     }
 
@@ -47,7 +56,7 @@ final class KnotDataStoreServiceModule extends ComponentModule
      */
     public static function declareComponentType() : string
     {
-        return Components::MODULE;
+        return ComponentTypes::SERVICE;
     }
 
     /**
@@ -63,7 +72,7 @@ final class KnotDataStoreServiceModule extends ComponentModule
             $c = $app->di();
 
             //====================================
-            // Components
+            // ComponentTypes
             //====================================
 
             // component://database factory
