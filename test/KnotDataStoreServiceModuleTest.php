@@ -18,7 +18,7 @@ use knotlib\datastore\storage\database\DatabaseStorage;
 use knotlib\kernel\module\ComponentTypes;
 
 use knotphp\module\knotdatastoreservices\KnotDataStoreServiceModule;
-use knotphp\module\knotdi\knotdimodule;
+use knotphp\module\knotdi\KnotDiModule;
 
 final class KnotDataStoreServiceModuleTest extends TestCase
 {
