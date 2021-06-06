@@ -1,25 +1,28 @@
 <?php
 declare(strict_types=1);
 
-namespace KnotModule\KnotDataStoreService\Test;
+namespace knotphp\module\knotdatastoreservices\test;
 
-use KnotLib\DataStore\Storage\Database\Database;
-use KnotLib\DataStore\Storage\Database\DatabaseConnection;
-use KnotLib\DataStore\Storage\Database\DatabaseStorage;
-use KnotLib\DataStoreService\ConnectionService;
+use knotlib\datastoreservices\ConnectionService;
+use knotlib\datastoreservices\DI;
+use knotlib\datastoreservices\RepositoryService;
+use knotlib\datastoreservices\TransactionService;
+use knotphp\module\knotdatastoreservices\test\classes\TestApplication;
+use knotphp\module\knotdatastoreservices\test\classes\TestFileSystem;
 use PHPUnit\Framework\TestCase;
 
-use KnotLib\Kernel\Module\ComponentTypes;
-use KnotLib\DataStoreService\DI;
-use KnotLib\DataStoreService\TransactionService;
-use KnotLib\DataStoreService\RepositoryService;
+use knotlib\datastore\storage\database\Database;
+use knotlib\datastore\storage\database\DatabaseConnection;
+use knotlib\datastore\storage\database\DatabaseStorage;
 
-use KnotPhp\Module\KnotDataStoreService\KnotDataStoreServiceModule;
-use KnotPhp\Module\KnotDi\KnotDiModule;
+use knotlib\kernel\module\ComponentTypes;
+
+use knotphp\module\knotdatastoreservices\KnotDataStoreServiceModule;
+use knotphp\module\knotdi\knotdimodule;
 
 final class KnotDataStoreServiceModuleTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

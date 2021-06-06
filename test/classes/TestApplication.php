@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace KnotModule\KnotDataStoreService\Test;
+namespace knotphp\module\knotdatastoreservices\test\classes;
 
-use KnotLib\Kernel\Kernel\ApplicationType;
-use KnotLib\Module\Application\SimpleApplication;
+use knotlib\kernel\kernel\ApplicationType;
+use knotlib\module\application\SimpleApplication;
 
 final class TestApplication extends SimpleApplication
 {

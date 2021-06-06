@@ -1,25 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace KnotPhp\Module\KnotDataStoreService;
+namespace knotphp\module\knotdatastoreservices;
 
 use Throwable;
 
-use KnotLib\Di\Container;
-use KnotLib\DataStore\Storage\Database\Database;
-use KnotLib\DataStore\Storage\Database\DatabaseStorage;
-use KnotLib\DataStoreService\ConnectionService;
-use KnotLib\DataStoreService\DI;
-use KnotLib\Kernel\Module\ModuleInterface;
-use KnotLib\Kernel\Module\ComponentTypes;
-use KnotLib\Kernel\Exception\ModuleInstallationException;
-use KnotLib\Kernel\Kernel\ApplicationInterface;
-use KnotLib\Kernel\EventStream\Events;
-use KnotLib\Kernel\EventStream\Channels as EventChannels;
-use KnotLib\DataStoreService\Util\DataStoreComponentTrait;
-use KnotLib\DataStoreService\Util\DataStoreStringTrait;
-use KnotLib\DataStoreService\TransactionService;
-use KnotLib\DataStoreService\RepositoryService;
+use knotlib\di\Container;
+use knotlib\datastore\storage\database\Database;
+use knotlib\datastore\storage\database\DatabaseStorage;
+use knotlib\kernel\module\ModuleInterface;
+use knotlib\kernel\module\ComponentTypes;
+use knotlib\kernel\exception\ModuleInstallationException;
+use knotlib\kernel\kernel\ApplicationInterface;
+use knotlib\kernel\eventstream\Events;
+use knotlib\kernel\eventstream\Channels as EventChannels;
+use knotlib\datastoreservices\util\DataStoreComponentTrait;
+use knotlib\datastoreservices\util\DataStoreStringTrait;
+use knotlib\datastoreservices\ConnectionService;
+use knotlib\datastoreservices\DI;
+use knotlib\datastoreservices\RepositoryService;
+use knotlib\datastoreservices\TransactionService;
 
 final class KnotDataStoreServiceModule implements ModuleInterface
 {
@@ -78,8 +78,8 @@ final class KnotDataStoreServiceModule implements ModuleInterface
             // component://database factory
             $c[DI::URI_COMPONENT_DATABASE] = function(Container $c) {
                 $db_dsn  = $this->getDatabaseDSN($c);
-                $db_user = getenv('DB_USER') ? getenv('DB_USER') : '';
-                $db_pass = getenv('DB_PASS') ? getenv('DB_PASS') : '';
+                $db_user = getenv('DB_USER') ?: '';
+                $db_pass = getenv('DB_PASS') ?: '';
                 return new Database($db_dsn, $db_user, $db_pass);
             };
 
@@ -112,7 +112,7 @@ final class KnotDataStoreServiceModule implements ModuleInterface
             // string://database/dsn factory
             $c[DI::URI_STRING_DB_DSN] = function() {
                 $db_dsn  = getenv('DB_DSN');
-                return $db_dsn ? $db_dsn : '';
+                return $db_dsn ?: '';
             };
 
             //====================================
@@ -139,9 +139,9 @@ final class KnotDataStoreServiceModule implements ModuleInterface
             // fire event
             $app->eventstream()->channel(EventChannels::SYSTEM)->push(Events::MODULE_INSTALLED, $this);
         }
-        catch(Throwable $e)
+        catch(Throwable $ex)
         {
-            throw new ModuleInstallationException(self::class, $e->getMessage(), 0, $e);
+            throw new ModuleInstallationException(self::class, $ex->getMessage(), $ex);
         }
     }
 }

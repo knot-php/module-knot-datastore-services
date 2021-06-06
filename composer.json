@@ -11,25 +11,25 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "knot-lib/di": "~0.1",
-    "knot-lib/module": "~0.1",
-    "knot-lib/datastore-services": "~0.1",
-    "knot-php/module-knot-di": "~0.1"
+    "php": ">=7.2",
+    "knot-lib/di": "~0.2",
+    "knot-lib/module": "~0.7",
+    "knot-lib/datastore-services": "~0.5",
+    "knot-php/module-knot-di": "~0.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.3.0",
+    "phpunit/phpunit": "^8.5.15",
     "php-coveralls/php-coveralls": "^2.0"
   },
   "autoload": {
     "psr-4": {
-      "KnotPhp\\Module\\KnotDataStoreService\\": "src/"
+      "knotphp\\module\\knotdatastoreservices\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "KnotPhp\\Module\\KnotDataStoreService\\Test\\": "test/include/",
-      "KnotPhp\\Module\\KnotDataStoreService\\Demo\\": "demo/include/"
+      "knotphp\\module\\knotdatastoreservices\\test\\": "test/",
+      "knotphp\\module\\knotdatastoreservices\\test\\classes\\": "test/classes/"
     }
   }
 }
